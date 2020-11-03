@@ -1,6 +1,6 @@
 package io.github.devtiagom.dynamicsearch.services;
 
-import io.github.devtiagom.dynamicsearch.Resources.dtos.UserRequestDTO;
+import io.github.devtiagom.dynamicsearch.resources.dtos.UserRequestDTO;
 import io.github.devtiagom.dynamicsearch.domain.User;
 import io.github.devtiagom.dynamicsearch.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

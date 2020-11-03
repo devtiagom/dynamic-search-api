@@ -1,6 +1,4 @@
-package io.github.devtiagom.dynamicsearch.Resources.dtos;
-
-import io.github.devtiagom.dynamicsearch.domain.User;
+package io.github.devtiagom.dynamicsearch.resources.dtos;
 
 public class UserRequestDTO {
 
