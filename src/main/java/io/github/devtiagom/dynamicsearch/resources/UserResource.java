@@ -1,7 +1,7 @@
 package io.github.devtiagom.dynamicsearch.resources;
 
 import io.github.devtiagom.dynamicsearch.resources.dtos.UserRequestDTO;
-import io.github.devtiagom.dynamicsearch.domain.User;
+import io.github.devtiagom.dynamicsearch.resources.dtos.UserResponseDTO;
 import io.github.devtiagom.dynamicsearch.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +26,7 @@ public class UserResource {
     @ApiOperation("Lists all users filtering (optionally) by name")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<User> listAllUsers(
+    public List<UserResponseDTO> listAllUsers(
             @RequestParam(value = "name", defaultValue = "", required = false) String name
     ) {
         return this.userService.getAllUsers(name);
@@ -35,21 +35,21 @@ public class UserResource {
     @ApiOperation("Shows a single user from database")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public User showOneUserById(@PathVariable Long id) {
+    public UserResponseDTO showOneUserById(@PathVariable Long id) {
         return this.userService.getOneUserById(id);
     }
 
     @ApiOperation("Creates new user on database")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User createNewUser(@RequestBody UserRequestDTO userDTO) {
+    public UserResponseDTO createNewUser(@RequestBody UserRequestDTO userDTO) {
         return this.userService.saveNewUser(userDTO);
     }
 
     @ApiOperation("Updates an existing user on database")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public User updateUserById(@PathVariable Long id, @RequestBody UserRequestDTO userDTO) {
+    public UserResponseDTO updateUserById(@PathVariable Long id, @RequestBody UserRequestDTO userDTO) {
         return this.userService.updateUserById(id, userDTO);
     }
 
