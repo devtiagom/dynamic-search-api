@@ -6,6 +6,7 @@ import io.github.devtiagom.dynamicsearch.repositories.CompanyRepository;
 import io.github.devtiagom.dynamicsearch.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -15,13 +16,13 @@ public class H2Service {
 
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public H2Service(
             UserRepository userRepository,
             CompanyRepository companyRepository,
-            BCryptPasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder
     ) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
