@@ -1,6 +1,8 @@
 package io.github.devtiagom.dynamicsearch.services;
 
+import io.github.devtiagom.dynamicsearch.domain.Company;
 import io.github.devtiagom.dynamicsearch.domain.User;
+import io.github.devtiagom.dynamicsearch.repositories.CompanyRepository;
 import io.github.devtiagom.dynamicsearch.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,15 +14,26 @@ import java.util.Arrays;
 public class H2Service {
 
     private final UserRepository userRepository;
+    private final CompanyRepository companyRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public H2Service(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public H2Service(
+            UserRepository userRepository,
+            CompanyRepository companyRepository,
+            BCryptPasswordEncoder passwordEncoder
+    ) {
         this.userRepository = userRepository;
+        this.companyRepository = companyRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     public void H2DatabaseSeeding() {
+        this.usersSeeding();
+        this.companiesSeeding();
+    }
+
+    private void usersSeeding() {
         User user01 = new User(
                 null,
                 "Fulana de Tal",
@@ -86,6 +99,22 @@ public class H2Service {
                 user06,
                 user07,
                 user08
+        ));
+    }
+
+    private void companiesSeeding() {
+        Company company01 = new Company(null, "Google LLC");
+        Company company02 = new Company(null, "Facebook Inc.");
+        Company company03 = new Company(null, "Amazon.com Inc.");
+        Company company04 = new Company(null, "Netflix");
+        Company company05 = new Company(null, "Space Exploration Technologies Corp.");
+
+        this.companyRepository.saveAll(Arrays.asList(
+                company01,
+                company02,
+                company03,
+                company04,
+                company05
         ));
     }
 }
