@@ -42,7 +42,8 @@ public class UserService {
                 null,
                 userDTO.getName(),
                 userDTO.getEmail(),
-                passwordEncoder.encode(userDTO.getPassword())
+                passwordEncoder.encode(userDTO.getPassword()),
+                userDTO.isAdmin()
         ));
         return new UserResponseDTO(newUser);
     }
@@ -52,6 +53,7 @@ public class UserService {
         userFromDB.setName(userDTO.getName());
         userFromDB.setEmail(userDTO.getEmail());
         userFromDB.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        userFromDB.setAdmin(userDTO.isAdmin());
         this.userRepository.save(userFromDB);
         return new UserResponseDTO(userFromDB);
     }

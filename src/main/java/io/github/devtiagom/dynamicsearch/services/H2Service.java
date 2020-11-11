@@ -39,56 +39,64 @@ public class H2Service {
                 null,
                 "Fulana de Tal",
                 "fulana.tal@gmail.com",
-                passwordEncoder.encode("1234")
+                passwordEncoder.encode("1234"),
+                true
         );
 
         User user02 = new User(
                 null,
                 "Beltrana de Tal",
                 "beltrana.tal@gmail.com",
-                passwordEncoder.encode("1234")
+                passwordEncoder.encode("1234"),
+                false
         );
 
         User user03 = new User(
                 null,
                 "Ciclana de Tal",
                 "ciclana.tal@gmail.com",
-                passwordEncoder.encode("1234")
+                passwordEncoder.encode("1234"),
+                false
         );
 
         User user04 = new User(
                 null,
                 "Badanha",
                 "badanha@gmail.com",
-                passwordEncoder.encode("1234")
+                passwordEncoder.encode("1234"),
+                true
         );
 
         User user05 = new User(
                 null,
                 "Badanha Jr",
                 "badanha.jr@gmail.com",
-                passwordEncoder.encode("1234")
+                passwordEncoder.encode("1234"),
+                false
         );
 
         User user06 = new User(
                 null,
                 "Fulano de Tal",
                 "fulano.tal@gmail.com",
-                passwordEncoder.encode("1234")
+                passwordEncoder.encode("1234"),
+                true
         );
 
         User user07 = new User(
                 null,
                 "Beltrano de Tal",
                 "beltrano.tal@gmail.com",
-                passwordEncoder.encode("1234")
+                passwordEncoder.encode("1234"),
+                false
         );
 
         User user08 = new User(
                 null,
                 "Ciclano de Tal",
                 "ciclano.tal@gmail.com",
-                passwordEncoder.encode("1234")
+                passwordEncoder.encode("1234"),
+                false
         );
 
         this.userRepository.saveAll(Arrays.asList(

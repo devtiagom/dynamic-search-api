@@ -5,13 +5,15 @@ public class UserRequestDTO {
     private String name;
     private String email;
     private String password;
+    private boolean isAdmin;
 
     public UserRequestDTO() {}
 
-    public UserRequestDTO(String name, String email, String password) {
+    public UserRequestDTO(String name, String email, String password, boolean isAdmin) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.isAdmin = isAdmin;
     }
 
     public String getName() {
@@ -36,5 +38,13 @@ public class UserRequestDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
