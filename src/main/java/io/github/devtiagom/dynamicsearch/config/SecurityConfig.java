@@ -1,5 +1,7 @@
 package io.github.devtiagom.dynamicsearch.config;
 
+import io.github.devtiagom.dynamicsearch.security.JWTAuthenticationFilter;
+import io.github.devtiagom.dynamicsearch.security.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
@@ -8,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,9 +20,11 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private Environment environment;
+    private final Environment environment;
 
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+    private final JWTUtils jwtUtils;
 
     private static final String[] PUBLIC_MATCHERS = { "/h2-console/**" };
 
@@ -28,9 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] PUBLIC_MATCHERS_POST = { "/api/v1/users" };
 
     @Autowired
-    public SecurityConfig(Environment environment, UserDetailsService userDetailsService) {
+    public SecurityConfig(
+            Environment environment,
+            UserDetailsService userDetailsService,
+            JWTUtils jwtUtils) {
         this.environment = environment;
         this.userDetailsService = userDetailsService;
+        this.jwtUtils = jwtUtils;
     }
 
     @Bean
@@ -49,14 +58,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             http.headers().frameOptions().disable();
         }
 
-        http.csrf().disable();
-        http.authorizeRequests()
+        http.csrf().disable()
+        .authorizeRequests()
                 .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
                 .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
-                .anyRequest().authenticated();
-//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.formLogin();
-        http.httpBasic();
+                .anyRequest().authenticated().and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtils));
     }
 }
