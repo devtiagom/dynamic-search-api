@@ -30,6 +30,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(
             HttpServletRequest request,
             HttpServletResponse response) throws AuthenticationException {
+
         try {
             CredentialsDTO credentials = new ObjectMapper()
                     .readValue(request.getInputStream(), CredentialsDTO.class);
@@ -50,6 +51,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletResponse response,
             FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
+
         String username = ((User) authResult.getPrincipal()).getUsername();
         String token = jwtUtils.generateToken(username);
         response.addHeader("Authorization", "Bearer " + token);

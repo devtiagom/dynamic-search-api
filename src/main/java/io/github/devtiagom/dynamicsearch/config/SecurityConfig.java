@@ -1,12 +1,12 @@
 package io.github.devtiagom.dynamicsearch.config;
 
 import io.github.devtiagom.dynamicsearch.security.JWTAuthenticationFilter;
+import io.github.devtiagom.dynamicsearch.security.JWTAuthorizarionFilter;
 import io.github.devtiagom.dynamicsearch.security.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -48,11 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         if (Arrays.asList(environment.getActiveProfiles()).contains("dev")) {
             http.headers().frameOptions().disable();
@@ -65,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .anyRequest().authenticated().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtils));
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtils))
+                .addFilter(new JWTAuthorizarionFilter(authenticationManager(), jwtUtils, userDetailsService));
     }
 }
